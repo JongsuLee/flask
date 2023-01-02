@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from datetime import datetime
+from pathlib import Path
 import os
 import cv2
 import numpy as np
@@ -127,7 +128,9 @@ def analyze_image(farmId):
 	date = datetime.now().strftime('%y%m%d')
 	path = f'/home/weberry/Desktop/images/farm/{mDate}/{farmId}/'
 	output_path = f'/home/weberry/Desktop/images/disease/{mDate}/{farmId}'
-	os.makedirs(output_path)
+	
+	if not Path(output_path).exists():
+		os.makedirs(output_path)
 	images = [path + fileName for fileName in os.listdir(path)]
 	
 	reports = {'requestList': []}
